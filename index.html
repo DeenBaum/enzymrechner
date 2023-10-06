@@ -1,0 +1,79 @@
+<style>
+  body,html
+  {
+    font-size: 1em;
+    background-color: #9C3B3C;
+    color: white;
+    line-height: 2em;
+  }
+  input
+  {
+    width: 6.5em;
+    text-align: center;
+    font-size: 1.5em;
+  }
+  button
+  {
+    font-size: 1em;
+    font-weight: bold;
+  }
+  span
+  {
+    font-size: 1.5em;
+    font-size: bold;
+  }
+</style>
+<center>
+<h2>Enzymrechner</h2>
+<p>
+Fett pro 100g<br />
+<input id="fettin" type="text">
+</p>
+<p>
+Verzehrte Menge in Gramm<br />
+<input id="mengein" type="text">
+</p>
+<button onclick="update()">und Los!</button>
+<h2>Ergebnis</h2>
+<p>
+Einheiten<br />
+<span id="einheiten">0</span>
+</p>
+<p>
+10.0000er<br />
+<span id="zehnerfeld">0</span>
+</p>
+<p>
+25.000er<br />
+<span id="zwanzigerfeld">0</span>
+</p>
+<p>
+das ergibt<br />
+<span id="total">0</span> Einheiten
+</p>
+</center>
+<script>
+  function update()
+  {
+    let fett = parseFloat(document.getElementById('fettin').value)
+    let menge = parseFloat(document.getElementById('mengein').value)
+    
+    if(!isNaN(fett) && !isNaN(menge))
+    {
+      let fetttotal = fett*(menge/100.0)
+      let einh = fetttotal*2000
+      let t25 = Math.floor(einh / 25000.0)
+      let t10 = Math.floor((einh-(t25*25000))/10000.0)
+      let over = einh - (t25*25000+t10*10000)
+      if(over > 0)
+      {
+        t10 += 1
+      }
+      let total =t25*25000+t10*10000
+      document.getElementById("einheiten").innerHTML = ""+Math.floor(einh)
+      document.getElementById("zehnerfeld").innerHTML = ""+Math.floor(t10)
+      document.getElementById("zwanzigerfeld").innerHTML = ""+Math.floor(t25)
+      document.getElementById("total").innerHTML = ""+Math.floor(total)
+    }
+  }
+</script>
